@@ -1,0 +1,17 @@
+<div class="fs-container">
+    <app-map></app-map>
+</div>
+
+<div class="location-input">
+    <div class="input-box">
+        <input type="text" #location placeholder="search...">
+        <button (click)="search()">search</button>
+    </div>
+    
+    <div class="choices-box">
+        <div class="choice" *ngFor="let choice of searchService.choices | async" (click)="selectChoice(choice)">
+            <img src="/assets/img/marker_red.png" alt="red marker">{{choice.display_name}}
+        </div>
+    </div>
+</div>
+
