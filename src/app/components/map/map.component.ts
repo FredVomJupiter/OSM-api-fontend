@@ -27,7 +27,11 @@ export class MapComponent implements AfterViewInit, OnInit, OnDestroy {
   private map!: L.Map;
 
   private initMap(): void {
-    this.map = L.map('map').setView([49.878708, 8.646927], 13);
+    let lat = 49.878708;
+    let lon = 8.646927;
+    let zoom = 13;
+    this.map = L.map('map').setView([lat, lon], zoom);
+    let center = this.map.getCenter();
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -59,7 +63,7 @@ export class MapComponent implements AfterViewInit, OnInit, OnDestroy {
     this.map.on('click', (e) => this.onMapClick(e));
 
     this.sub = this.searchService.selection.subscribe((location: any) => {
-      if(location.lat == 0 && location.lon == 0) return;
+      if (location.lat == 0 && location.lon == 0) return;
       this.previousMarker.remove();
       this.previousMarker = L.marker([location.lat, location.lon], { icon: this.iconRed }).addTo(this.map).bindPopup(location.display_name + " (" + location.type + ")").openPopup();
       this.map.setView([location.lat, location.lon], 13);
